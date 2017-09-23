@@ -24,7 +24,7 @@ class SignUp(CreateView):
         return redirect('Movie:list')
 
 class SignIn(LoginView):
-    pass
+    template_name = 'login.html'
 
 class SignOut(LogoutView):
     pass
