@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'movies'
+    'movies', 
+    'userprofiles',
 ]
 
 MIDDLEWARE = [
@@ -114,6 +115,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Login URLS
+
+LOGIN_URL = '/signup/'
+LOGOUT_URL = 'signout'
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
