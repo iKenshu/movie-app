@@ -4,11 +4,16 @@ from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 
 from .models import Profile
+from .forms import SignUpForm
+
 
 # Create your views here.
 
 class SignUp(CreateView):
     model = Profile
+    field = ['first_name', 'last_name', 'email']
+    template_name = 'registration.html'
+    form_class = SignUpForm
 
     def form_valid(self, form):
         form.save()

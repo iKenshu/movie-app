@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+
+<form action="" method="POST">
+    <h2>Sign Up</h2>
+    {% csrf_token %}
+
+    {% for hidden in form.hidden_fields  %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger" role='alter'>
+        {% for error in form.non_field_erors  %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-row">
+    {% for field in form.visible_fields %}
+        <div class="form-group col-md-6">
+            {{ field.label_tag }}
+
+            {% if form.is_bound %}
+                {% if field.errors %}
+                    {% render_field field class="form-control is-invalid" %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% render_field field class="form-control is-valid" %}
+                {% endif %}
+            {% else %}
+                {% render_field field class="form-control" %}
+            {% endif %}
+        </div>
+        
+    {% endfor %}
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">
+                Sign me up
+            </button>
+            <a href="{% url 'Movie:list'  %}" class="btn btn-default">Cancel</a>
+        </div>
+    </div>    
+
+</form>
+{% endblock content %}
