@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col Movie-form">
+   
+    <h1>Add New Movie</h1>
+
+    <form class="form-group" action="" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-movie">
+    </form>
+
+</div>
+{% endblock content %}

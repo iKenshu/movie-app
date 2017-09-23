@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}New Review for {{ user.username }}{% endblock %}
+
+{% block content %}
+
+<div class="col Movie-form">
+   
+    <h1>Add New Review {{ object }}</h1>
+
+    <form class="form-group" action="" method="POST">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-movie">
+    </form>
+
+</div>
+    
+{% endblock content %}

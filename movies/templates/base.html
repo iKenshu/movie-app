@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Movie Review {% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+
+</head>
+<body>
+    <nav class="Movie-menu nav justify-content-end">
+        <a href="{% url 'Movie:list' %}" class="nav-link">Home</a>
+        <a href="{% url 'Movie:create' %}" class="nav-link">Create</a>
+        <a href="" class="nav-link"></a>
+    </nav>
+    <div class="container">
+            {% block content %}
+                
+            {% endblock content %}    
+    </div>
+
+{% include 'boostrap_js.html' %}
+
+
+</body>
+</html>
