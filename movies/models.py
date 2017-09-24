@@ -34,7 +34,7 @@ class Review(models.Model):
     created_date = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return self.commnet
+        return self.comment
 
 
 

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 
 from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic.edit import FormMixin
 
 from .forms import MovieForm, ReviewForm
 from .models import Movie, Review
@@ -21,18 +22,33 @@ class MovieCreate(CreateView):
         form.save()
         return redirect('Movie:list')
 
-class MovieDetail(DetailView):
+class MovieDetail(FormMixin, DetailView):
     model = Movie
+    form_class = ReviewForm
+
+    def get_success_url(self):
+        return reverse('Movie:detail', kwargs={'slug': self.object.slug})
+
+    def get_context_data(self, **kwargs):
+        context = super(MovieDetail, self).get_context_data(**kwargs)
+        context['form'] = ReviewForm(initial={'movie': self.object})
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+       form.instance.user = self.request.user
+       form.instance.movie = Movie.objects.get(slug=self.kwargs['slug'])
+       form.save()
+       return super(MovieDetail, self).form_valid(form)
 
 class ReviewCreate(CreateView):
     model = Review
     form_class = ReviewForm
-
-    def get_success_url(self):
-        return reverse('Movie:list')
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.movie = Movie.objects.get(slug=self.kwargs['slug'])
-        form.save()
-        return super(ReviewCreate, self).form_valid(form)
+    

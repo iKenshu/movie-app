@@ -5,14 +5,19 @@
 {% block content %}
 
 <div class="col">
-    <<arcticle class="Movie-card--detail card">
+    <arcticle class="Movie-card--detail card">
         <img src="{{ movie.poster.url }}" alt="" class="Movie-poster card-img-top">
         <div class="card-body">
             <h4 class="card-title">{{ movie.title }}</h4>
             <h6 class="card-subtitle text-muted">{{ movie.review.rating }}</h6>
             <p class="card-text">{{ movie.synopsis|truncatewords:40 }}</p>
-            <a href="{% url 'Movie:review'  movie.slug %}" class="btn btn-primary">Add New Review</a>
-            
+
+            <form class="form-group" action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-movie" value="Add New Review<">
+            </form>
+
             {% for review in movie.reviews.all %}
             <ul class="list-group">
                 <li class="list-group-item">
@@ -20,9 +25,6 @@
                     {{ review.comment }}
                 </li>
             </ul>
-            
-            
-                
             {% endfor %}
         </div>
     </arcticle>

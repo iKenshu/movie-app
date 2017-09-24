@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<form action="" method="POST">
+<form action="" method="POST" class="Movie-form">
     <h2>Sign Up</h2>
     {% csrf_token %}
 
@@ -45,11 +45,11 @@
         
     {% endfor %}
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">
+        <div class="Movie-btns form-group">
+            <button type="submit" class="btn btn-movie">
                 Sign me up
             </button>
-            <a href="{% url 'Movie:list'  %}" class="btn btn-default">Cancel</a>
+            <a href="{% url 'Movie:list'  %}" class="btn btn-danger">Cancel</a>
         </div>
     </div>    
 

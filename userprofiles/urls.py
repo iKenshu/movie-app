@@ -6,5 +6,5 @@ app_name = 'Profile'
 urlpatterns = [
     url(r'^signup/', SignUp.as_view(), name='sign_up'),
     url(r'^signin/$', SignIn.as_view(), name='sign_in'),
-    url(r'^signout/$', SignOut.as_view(), name='sign_out'),
+    url(r'^logout/$', SignOut.as_view(), name='sign_out'),
 ]
