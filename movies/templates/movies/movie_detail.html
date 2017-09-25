@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {% block title %} {{ movie.title }}{% endblock title %}
 
@@ -9,19 +10,35 @@
         <img src="{{ movie.poster.url }}" alt="" class="Movie-poster card-img-top">
         <div class="card-body">
             <h4 class="card-title">{{ movie.title }}</h4>
-            <h6 class="card-subtitle text-muted">{{ movie.review.rating }}</h6>
-            <p class="card-text">{{ movie.synopsis|truncatewords:40 }}</p>
+            <h6 class="card-subtitle text-muted"><span class="icon-star"></span> {{ rating.rating__avg|floatformat:1 }}</h6>
+            <p class="card-text">{{ movie.synopsis }}</p>
 
             <form class="form-group" action="" method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" class="btn btn-movie" value="Add New Review<">
+
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}  
+
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {% render_field field class="form-control" %}
+
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">
+                            {{ field.help_text }}
+                        </small>
+                    {% endif %}
+                    </div>
+                {% endfor %}     
+                <input type="submit" class="btn btn-movie" value="Add New Review">
             </form>
 
             {% for review in movie.reviews.all %}
             <ul class="list-group">
                 <li class="list-group-item">
-                    {{ review.rating }} |
+                    {{ review.rating }} <span class="icon-star"> |</span> 
                     {{ review.comment }}
                 </li>
             </ul>

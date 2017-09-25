@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect 
 from django.core.urlresolvers import reverse
+from django.db.models import Avg
 
 from django.views.generic import ListView, CreateView, DetailView
 from django.views.generic.edit import FormMixin
@@ -31,6 +32,9 @@ class MovieDetail(FormMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(MovieDetail, self).get_context_data(**kwargs)
+        slug = self.kwargs['slug']
+        movie = Movie.objects.get(slug=slug) 
+        context['rating'] = Review.objects.filter(movie=movie).aggregate(Avg('rating'))
         context['form'] = ReviewForm(initial={'movie': self.object})
         return context
 
