@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Avg
 
@@ -55,4 +55,3 @@ class MovieDetail(FormMixin, DetailView):
 class ReviewCreate(CreateView):
     model = Review
     form_class = ReviewForm
-    

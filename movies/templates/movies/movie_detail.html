@@ -13,27 +13,31 @@
             <h6 class="card-subtitle text-muted"><span class="icon-star"></span> {{ rating.rating__avg|floatformat:1 }}</h6>
             <p class="card-text">{{ movie.synopsis }}</p>
 
-            <form class="form-group" action="" method="POST">
-                {% csrf_token %}
+            {% if user.is_authenticated %}
+                <form class="form-group" action="" method="POST">
+                    {% csrf_token %}
 
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}  
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}  
 
-                {% for field in form.visible_fields %}
-                    <div class="form-group">
-                        {{ field.label_tag }}
-                        {% render_field field class="form-control" %}
+                    {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {% render_field field class="form-control" %}
 
-                    {% if field.help_text %}
-                        <small class="form-text text-muted">
-                            {{ field.help_text }}
-                        </small>
-                    {% endif %}
-                    </div>
-                {% endfor %}     
-                <input type="submit" class="btn btn-movie" value="Add New Review">
-            </form>
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">
+                                {{ field.help_text }}
+                            </small>
+                        {% endif %}
+                        </div>
+                    {% endfor %}
+                        <input type="submit" class="btn btn-movie" value="Add New Review">
+                {% else %}
+                    <a href="{% url 'Profile:sign_in' %}" class="alert alert-danger">You must log in or register to add a review</a>
+                {% endif %}     
+                </form>
 
             {% for review in movie.reviews.all %}
             <ul class="list-group">

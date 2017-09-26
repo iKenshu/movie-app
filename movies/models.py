@@ -15,6 +15,9 @@ class Movie(models.Model):
     created_date = models.DateField(default=timezone.now)
     slug = models.SlugField(max_length=140)
 
+    class Meta:
+        ordering = ['-created_by']
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
