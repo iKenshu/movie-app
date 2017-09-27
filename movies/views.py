@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Avg
 
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from django.views.generic import ListView, CreateView, DetailView
 from django.views.generic.edit import FormMixin
 
 from .forms import MovieForm, ReviewForm
 from .models import Movie, Review
+from .serializers import MovieSerializer
 
 # Create your views here.
 
@@ -51,6 +53,19 @@ class MovieDetail(FormMixin, DetailView):
        form.instance.movie = Movie.objects.get(slug=self.kwargs['slug'])
        form.save()
        return super(MovieDetail, self).form_valid(form)
+
+# Movies API views 
+
+class MovieAPIList(ListAPIView):
+    queryset = Movie.objects.all() 
+    serializer_class = MovieSerializer
+
+class MovieAPIDetail(RetrieveAPIView):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    lookup_field = "slug"
+
+# Review views
 
 class ReviewCreate(CreateView):
     model = Review
