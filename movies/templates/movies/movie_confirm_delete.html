@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<form class="Movie-form" action="" method="POST">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{ movie.title }}"?</p>
+    <input type="submit" value="Confirm" />
+</form>
     
 {% endblock content %}

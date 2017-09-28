@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.core.urlresolvers import reverse
 from django.db.models import Avg
+from django.utils.decorators import method_decorator
+from django.contrib.admin.views.decorators import staff_member_required
 
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from django.views.generic import (
@@ -30,13 +33,17 @@ class MovieCreate(CreateView):
         form.instance.created_by = self.request.user
         form.save()
         return redirect('Movie:list')
-
+        
+@method_decorator(staff_member_required, name='dispatch')
 class MovieUpdate(UpdateView):
     model = Movie
     form_class = MovieForm
 
+@method_decorator(staff_member_required, name='dispatch')
 class MovieDelete(DeleteView):
     model = Movie
+    success_url = reverse_lazy('Movie:list')
+
 
 class MovieDetail(FormMixin, DetailView):
     model = Movie

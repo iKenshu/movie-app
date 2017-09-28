@@ -120,7 +120,7 @@ USE_TZ = True
 
 # Login URLS
 
-LOGIN_URL = '/signup/'
+LOGIN_URL = '/signin/'
 LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
