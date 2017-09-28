@@ -3,7 +3,13 @@ from django.core.urlresolvers import reverse
 from django.db.models import Avg
 
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import (
+        ListView, 
+        CreateView, 
+        DetailView,
+        UpdateView,
+        DeleteView, 
+    )
 from django.views.generic.edit import FormMixin
 
 from .forms import MovieForm, ReviewForm
@@ -24,6 +30,13 @@ class MovieCreate(CreateView):
         form.instance.created_by = self.request.user
         form.save()
         return redirect('Movie:list')
+
+class MovieUpdate(UpdateView):
+    model = Movie
+    form_class = MovieForm
+
+class MovieDelete(DeleteView):
+    model = Movie
 
 class MovieDetail(FormMixin, DetailView):
     model = Movie
