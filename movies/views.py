@@ -3,8 +3,8 @@ from django.urls import reverse_lazy
 from django.core.urlresolvers import reverse
 from django.db.models import Avg
 from django.utils.decorators import method_decorator
-from django.contrib.admin.views.decorators import staff_member_required
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from rest_framework.generics import ListAPIView, RetrieveAPIView

@@ -42,12 +42,16 @@
                 </form>
 
             {% for review in movie.reviews.all %}
-            <ul class="list-group">
-                <li class="list-group-item">
-                    {{ review.rating }} <span class="icon-star"> |</span> 
-                    {{ review.comment }}
-                </li>
-            </ul>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        {{ review.rating }} <span class="icon-star"> ~ {{ review.user }} </span> 
+                    </h6>
+                    <p class="card-text">
+                        {{ review.comment }}
+                    </p>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </arcticle>
