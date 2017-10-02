@@ -9,10 +9,8 @@
     <arcticle class="Movie-card--detail card">
         <img src="{{ movie.poster.url }}" alt="" class="Movie-poster card-img-top">
         <div class="card-body">
-            {% if user.is_staff %}
                 <a href="{% url 'Movie:update' movie.slug %}">edit</a>
                 <a href="{% url 'Movie:delete' movie.slug %}">delete</a>
-            {% endif %}
             <h4 class="card-title">{{ movie.title }}</h4>
             <h6 class="card-subtitle text-muted"><span class="icon-star"></span> {{ rating.rating__avg|floatformat:1 }}</h6>
             <p class="card-text">{{ movie.synopsis }}</p>

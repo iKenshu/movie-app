@@ -13,6 +13,15 @@
         {{ hidden }}
     {% endfor %}
 
+    {% if messages %}
+        <div class="aler alert-danger">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>        
+    
+    {% endif %}
+
     {% if form.non_field_errors %}
         <div class="alert alert-danger" role="alert">
             {% for error in form.non_field_errors %}

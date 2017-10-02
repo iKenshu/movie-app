@@ -5,6 +5,8 @@ from django.db.models import Avg
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 
+from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from django.views.generic import (
         ListView, 
@@ -34,16 +36,25 @@ class MovieCreate(CreateView):
         form.save()
         return redirect('Movie:list')
         
-@method_decorator(staff_member_required, name='dispatch')
-class MovieUpdate(UpdateView):
+class MovieUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'staff_member_required'
+    login_url = 'Profile:sign_in'
     model = Movie
     form_class = MovieForm
 
-@method_decorator(staff_member_required, name='dispatch')
-class MovieDelete(DeleteView):
+    def handle_no_permission(self):
+        messages.error(self.request, 'Only member of staff can update movies')
+        return super(MovieUpdate, self).handle_no_permission()
+
+class MovieDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'staff_member_required'
+    login_url = 'Profile:sign_in'
     model = Movie
     success_url = reverse_lazy('Movie:list')
 
+    def handle_no_permission(self):
+        messages.error(self.request, 'Only member of staff can delete movies')
+        return super(MovieDelete, self).handle_no_permission()
 
 class MovieDetail(FormMixin, DetailView):
     model = Movie
