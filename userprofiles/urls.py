@@ -4,7 +4,19 @@ from .views import SignUp, SignIn, SignOut
 
 app_name = 'Profile'
 urlpatterns = [
-    url(r'^signup/', SignUp.as_view(), name='sign_up'),
-    url(r'^signin/$', SignIn.as_view(), name='sign_in'),
-    url(r'^logout/$', SignOut.as_view(), name='sign_out'),
+    url(
+        regex='^signup/',
+        view=SignUp.as_view(),
+        name='sign_up'
+    ),
+    url(
+        regex='^signin/$',
+        view=SignIn.as_view(),
+        name='sign_in'
+    ),
+    url(
+        regex='^logout/$',
+        view=SignOut.as_view(),
+        name='sign_out'
+    ),
 ]
