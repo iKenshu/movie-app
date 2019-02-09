@@ -1,7 +1,6 @@
 *.pyc
 *.pyo
+.env
 db.sqlite3
 __pycache__
 .DS_Store
-static
-media

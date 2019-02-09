@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -10,48 +10,41 @@ from .views import (
     MovieUpdate,
     MovieDelete,
     ReviewCreate,
-
     MovieAPIList,
-    MovieAPIDetail
+    MovieAPIDetail,
 )
 
-app_name = 'Movie'
+app_name = "Movie"
 urlpatterns = [
-    url(
-        regex='^$',
-        view=MovieList.as_view(),
-        name='list'),
-    url(
-        regex='^create/',
-        view=MovieCreate.as_view(),
-        name='create'),
-    url(
-        regex='^movie/(?P<slug>[\w-]+)/$',
-        view=MovieDetail.as_view(),
-        name='detail'),
-    url(
-        regex='^movie/(?P<slug>[\w-]+)/edit$',
+    path(route="", view=MovieList.as_view(), name="list"),
+    path(route="create/", view=MovieCreate.as_view(), name="create"),
+    path(
+        route="movie/<slug:slug>/", view=MovieDetail.as_view(), name="detail"
+    ),
+    path(
+        route="movie/<slug:slug>/edit/",
         view=MovieUpdate.as_view(),
-        name='update'),
-    url(
-        regex='^movie/(?P<slug>[\w-]+)/delete$',
+        name="update",
+    ),
+    path(
+        route="movie/<slug:slug>/delete/",
         view=MovieDelete.as_view(),
-        name='delete'),
-    url(
-        regex='^movie/review/(?P<slug>[\w-]+)/$',
+        name="delete",
+    ),
+    path(
+        route="movie/review/<slug:slug>/",
         view=ReviewCreate.as_view(),
-        name='review'),
-
-    url(
-        regex='^api/movies/$',
-        view=MovieAPIList.as_view(),
-        name='api_list'),
-    url(
-        regex='^api/movies/(?P<slug>[\w-]+)/$',
+        name="review",
+    ),
+    path(route="api/movies/", view=MovieAPIList.as_view(), name="api_list"),
+    path(
+        route="api/movies/<slug:slug>/",
         view=MovieAPIDetail.as_view(),
-        name='api_detail'),
-
+        name="api_detail",
+    ),
 ]
 
 if settings.DEBUG is True:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

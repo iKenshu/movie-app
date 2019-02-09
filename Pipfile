@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+django-debug-toolbar = "*"
+django-extensions = "*"
+werkzeug = "*"
+
+[packages]
+django-widget-tweaks = "==1.4.1"
+olefile = "==0.44"
+pytz = "==2017.2"
+django = "*"
+pillow = "*"
+django-environ = "*"
+djangorestframework = "*"
+
+[requires]
+python_version = "3.7"

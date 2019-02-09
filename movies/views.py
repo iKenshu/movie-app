@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.core.urlresolvers import reverse
+from django.urls import reverse_lazy, reverse
 from django.db.models import Avg
 from django.utils.decorators import method_decorator
 
@@ -26,7 +25,7 @@ from .serializers import MovieSerializer
 
 class MovieList(ListView):
     model = Movie
-    context_object_name = 'movies'
+    context_object_name = "movies"
 
 
 class MovieCreate(CreateView):
@@ -36,28 +35,28 @@ class MovieCreate(CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.save()
-        return redirect('Movie:list')
+        return redirect("Movie:list")
 
 
 class MovieUpdate(PermissionRequiredMixin, UpdateView):
-    permission_required = 'staff_member_required'
-    login_url = 'Profile:sign_in'
+    permission_required = "staff_member_required"
+    login_url = "Profile:sign_in"
     model = Movie
     form_class = MovieForm
 
     def handle_no_permission(self):
-        messages.error(self.request, 'Only member of staff can update movies')
+        messages.error(self.request, "Only member of staff can update movies")
         return super(MovieUpdate, self).handle_no_permission()
 
 
 class MovieDelete(PermissionRequiredMixin, DeleteView):
-    permission_required = 'staff_member_required'
-    login_url = 'Profile:sign_in'
+    permission_required = "staff_member_required"
+    login_url = "Profile:sign_in"
     model = Movie
-    success_url = reverse_lazy('Movie:list')
+    success_url = reverse_lazy("Movie:list")
 
     def handle_no_permission(self):
-        messages.error(self.request, 'Only member of staff can delete movies')
+        messages.error(self.request, "Only member of staff can delete movies")
         return super(MovieDelete, self).handle_no_permission()
 
 
@@ -66,14 +65,16 @@ class MovieDetail(FormMixin, DetailView):
     form_class = ReviewForm
 
     def get_success_url(self):
-        return reverse('Movie:detail', kwargs={'slug': self.object.slug})
+        return reverse("Movie:detail", kwargs={"slug": self.object.slug})
 
     def get_context_data(self, **kwargs):
         context = super(MovieDetail, self).get_context_data(**kwargs)
-        slug = self.kwargs['slug']
+        slug = self.kwargs["slug"]
         movie = Movie.objects.get(slug=slug)
-        context['rating'] = Review.objects.filter(movie=movie).aggregate(Avg('rating'))
-        context['form'] = ReviewForm(initial={'movie': self.object})
+        context["rating"] = Review.objects.filter(movie=movie).aggregate(
+            Avg("rating")
+        )
+        context["form"] = ReviewForm(initial={"movie": self.object})
         return context
 
     def post(self, request, *args, **kwargs):
@@ -86,9 +87,10 @@ class MovieDetail(FormMixin, DetailView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.movie = Movie.objects.get(slug=self.kwargs['slug'])
+        form.instance.movie = Movie.objects.get(slug=self.kwargs["slug"])
         form.save()
         return super(MovieDetail, self).form_valid(form)
+
 
 # Movies API views
 
@@ -102,6 +104,7 @@ class MovieAPIDetail(RetrieveAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     lookup_field = "slug"
+
 
 # Review views
 
