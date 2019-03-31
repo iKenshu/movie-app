@@ -1,3 +1,22 @@
+:root {
+  --main-bg-color: #363333;
+  --main-ft-color: #ffffff;
+}
+
+body {
+  background: var(--main-bg-color);
+  color: var(--main-ft-color);
+}
+
 .Movie-menu {
-    background: #e16428;
+  background: #e16428;
+  padding: 0.5rem;
+}
+
+.Movie-menu a {
+  color: var(--main-ft-color);
+}
+
+.Movie-card {
+  width: calc(100% / 3);
 }
