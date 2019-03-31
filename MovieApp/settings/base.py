@@ -119,8 +119,6 @@ LOGOUT_REDIRECT_URL = "/"
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join("static")]
-print(STATIC_URL)
-print(STATICFILES_DIRS)
 
 
 STATICFILES_FINDERS = [
