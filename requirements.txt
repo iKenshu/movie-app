@@ -1,7 +1,8 @@
+-i https://pypi.org/simple/
 django-environ==0.4.5
 django-widget-tweaks==1.4.1
 django==2.1.5
 djangorestframework==3.9.1
 olefile==0.44
-pillow==5.4.1
+pillow==8.2.0
 pytz==2017.2
